@@ -1,0 +1,6 @@
+time,latitude,longitude,depth,mag,magType,nst,gap,dmin,rms,net,id,updated,place,type
+2015-07-28T18:49:39.650Z,40.919117,-72.655834,11.02,2.54,md,26,43,0.03301,0.03,nm,nm60010913,2015-07-28T19:09:36.944Z,"10km SSE of Ridgely, Tennessee",earthquake
+2015-07-28T18:05:12.590Z,40.892086,-72.380043,49.49,4.8,mwr,,89,0.805,0.97,us,us200030xt,2015-07-28T19:08:34.138Z,"47km WNW of Molina, Chile",earthquake
+2015-07-28T17:53:17.750Z,40.761532,-73.308365,9.914,2.56,ml,63,35,0.08749,0.22,ci,ci37215039,2015-07-28T19:05:12.762Z,"11km NE of Ocotillo Wells, California",earthquake
+2015-07-28T16:38:52.000Z,40.765789,-73.011454,99.6,2.6,ml,,,,0.55,ak,ak11660773,2015-07-28T17:09:50.691Z,"93km WNW of Willow, Alaska",earthquake
+2015-07-28T15:28:36.000Z,40.80051,-72.876654,108.6,2.9,ml,,,,0.75,ak,ak11660670,2015-07-28T16:17:27.925Z,"23km SE of Redoubt Volcano, Alaska",earthquake
