@@ -30,7 +30,7 @@ namespace ArcGISApp2
     {
         private string featureLayerServiceUrl = string.Empty;
         private string basemapLayerServiceUrl = string.Empty;
-        
+     
       
         public MainWindow()
         {
@@ -38,8 +38,23 @@ namespace ArcGISApp2
             //GetLayerUrls(); //doesn't work
             //_graphicsOverlay = MyMapView.GraphicsOverlays["graphicsOverlay"];
             //GetWebMap();
-            AddGraphics();
-            AddGraphics2();
+            AddGraphics("540 East Main Street, Riverhead, NY  11901", "Alternatives Counseling Services, Inc.");
+            AddGraphics("3281 Veterans Memorial Highway, Ronkonkoma NY 11779", "Community Counseling Services of Ronkonkoma");
+            AddGraphics("423 Park Avenue Huntington NY","Huntington Youth Bureau");
+            AddGraphics("2760 Middle Country Road Lake Grove NY", "IMPACT Counseling Services");
+            AddGraphics("30 Floyds Run Bohemia NY", "Institute for Rational Counseling");
+            AddGraphics("208 Route 112 Port Jefferson NY","John T Mather Memorial Hospital");
+            AddGraphics("300 Motor Parkway Hauppauge NY","The Kenneth Peters Center for Recovery");
+
+        }
+        private  void GetLocalMap()
+        {
+           // MessageBox.Show("Unable to access item ");
+          //var varOldBaseMap = MyMap
+            //MyMapView.Map.Layers.Add(new ArcGISTiledMapServiceLayer()
+            //{
+            //    ServiceUri = ("http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer")
+            //});
         }
         private async void GetWebMap()
         {
@@ -78,7 +93,7 @@ namespace ArcGISApp2
             var foo = webMap.OperationalLayers[0].ShowLegend;
 }
 
-        private async void AddGraphics( )
+        private async void AddGraphics(string p_parameters, string p_textLabel )
         {
             //The constructor takes two arguments: the URI for the geocode service and a token (required for secured services).
             var uri = new Uri("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
@@ -86,7 +101,7 @@ namespace ArcGISApp2
             var locator = new OnlineLocatorTask(uri, token);
 
             // OnlineLocatorFindParameters object, which holds all relevant information for the address search.
-            var findParams = new OnlineLocatorFindParameters("540 East Main Street, Riverhead, NY  11901");
+            var findParams = new OnlineLocatorFindParameters(p_parameters);
             findParams.OutSpatialReference = MyMapView.SpatialReference;
             findParams.SourceCountry = "US";
 
@@ -114,7 +129,7 @@ namespace ArcGISApp2
                 textSym.Color = Colors.Red;
                 textSym.Font = new Esri.ArcGISRuntime.Symbology.SymbolFont("Arial", 12);
                 textSym.BackgroundColor = Colors.SeaShell;
-                textSym.Text = "Alternatives Counseling Services, Inc.";
+                textSym.Text = p_textLabel;
                 //textSym.Angle = -60;
                // create a graphic for the text (apply TextSymbol)
                 var textGraphic = new Esri.ArcGISRuntime.Layers.Graphic(matchLocation, textSym);
@@ -124,53 +139,7 @@ namespace ArcGISApp2
             }
         }
 
-        private async void AddGraphics2()
-        {
-            //The constructor takes two arguments: the URI for the geocode service and a token (required for secured services).
-            var uri = new Uri("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-            var token = String.Empty;
-            var locator = new OnlineLocatorTask(uri, token);
-
-            // OnlineLocatorFindParameters object, which holds all relevant information for the address search.
-            var findParams = new OnlineLocatorFindParameters("3281 Veterans Memorial Highway, Ronkonkoma NY 11779");
-            findParams.OutSpatialReference = MyMapView.SpatialReference;
-            findParams.SourceCountry = "US";
-
-            // 
-            var results = await locator.FindAsync(findParams, new System.Threading.CancellationToken());
-
-            if (results.Count > 0)
-            {
-                var firstMatch = results[0].Feature;
-                var matchLocation = firstMatch.Geometry as MapPoint;
-
-                //Add a point graphic at the address location
-                var matchSym = new PictureMarkerSymbol();
-                var pictureUri = new Uri("http://static.arcgis.com/images/Symbols/Animated/EnlargeGradientSymbol.png");
-                await matchSym.SetSourceAsync(pictureUri);
-
-                var matchGraphic = new Graphic(matchLocation, matchSym);
-
-                // Get a reference to the graphic layer you defined for the map, and add the new graphic.
-                var graphicsLayer = MyMap.Layers["MyGraphics"] as GraphicsLayer;
-                graphicsLayer.Graphics.Add(matchGraphic);
-
-                // create a text symbol: define color, font, size, and text for the label
-                var textSym = new Esri.ArcGISRuntime.Symbology.TextSymbol();
-                textSym.Color = Colors.Red;
-                textSym.Font = new Esri.ArcGISRuntime.Symbology.SymbolFont("Arial", 12);
-                textSym.BackgroundColor = Colors.SeaShell;
-                textSym.Text = "Community Counseling Services of Ronkonkoma";
-                //textSym.Angle = -60;
-                // create a graphic for the text (apply TextSymbol)
-                var textGraphic = new Esri.ArcGISRuntime.Layers.Graphic(matchLocation, textSym);
-                graphicsLayer.Graphics.Add(textGraphic);
-
-
-            }
-        }
-
-        private async void GetLayerUrls()
+               private async void GetLayerUrls()
         {
             await MyMapView.LayersLoadedAsync();
 
@@ -244,6 +213,7 @@ namespace ArcGISApp2
         private async void FindAddressButton_Click(object sender, RoutedEventArgs e)
         {
             try {
+                progress.Visibility = Visibility.Visible;
 
             //The constructor takes two arguments: the URI for the geocode service and a token (required for secured services).
             var uri = new Uri("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
@@ -251,7 +221,8 @@ namespace ArcGISApp2
             var locator = new OnlineLocatorTask(uri, token);
 
             // OnlineLocatorFindParameters object, which holds all relevant information for the address search.
-            var findParams = new OnlineLocatorFindParameters(AddressTextBox.Text);
+            //var findParams = new OnlineLocatorFindParameters(AddressTextBox.Text);
+            var findParams = new OnlineLocatorFindParameters(InputAddress.Text + " " + City.Text + " " + State.Text + " " + Zip.Text);
             findParams.OutSpatialReference = MyMapView.SpatialReference;
             findParams.SourceCountry = "US";
 
@@ -276,7 +247,8 @@ namespace ArcGISApp2
                 graphicsLayer.Graphics.Add(matchGraphic);
                // _graphicsOverlay.Graphics.Add(matchGraphic);
 
-
+                txtResult.Visibility = System.Windows.Visibility.Visible;
+                txtResult.Text = ("Found:  " +  matchLocation.X +",  " +  matchLocation.Y);
 
                 // zooms into pin point graphic:
                 //The Envelope is created by subtracting 1000 meters from the location's
@@ -304,6 +276,16 @@ namespace ArcGISApp2
         private void LoadWebMap_Click(object sender, RoutedEventArgs e)
         {
             GetWebMap();
+        }
+
+        private void FindButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LoadLocalMap_Click(object sender, RoutedEventArgs e)
+        {
+            GetLocalMap();
         }
     }
 }

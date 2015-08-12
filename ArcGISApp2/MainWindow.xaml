@@ -85,7 +85,10 @@
                 <esri:GraphicsOverlay ID="graphicsOverlay" />
             </esri:MapView.GraphicsOverlays>-->
         </esri:MapView>
-        <Border Background="White" BorderBrush="Black" BorderThickness="1"
+        
+        <!--Working, but used the one below instead:-->
+        
+        <!--<Border Background="White" BorderBrush="Black" BorderThickness="1"
 				 HorizontalAlignment="Right" VerticalAlignment="Top"
 				 Margin="30" Padding="20">
             <Border.Effect>
@@ -107,6 +110,111 @@
                     <Button x:Name="LoadWebMap"  Content="Load Web Map" Click="LoadWebMap_Click" />
                 </StackPanel>
                 </Grid>
+        </Border>-->
+
+        <Border x:Name="panelEdit"
+				Background="White" BorderBrush="Black" BorderThickness="1"
+				HorizontalAlignment="Left" VerticalAlignment="Top"
+				Margin="10" Padding="20" Width="375">
+            <Border.Effect>
+                <DropShadowEffect/>
+            </Border.Effect>
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Enter Client's Address" FontSize="14" FontWeight="Bold" 
+                               HorizontalAlignment="Center" Margin="0,0,0,6" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Name: " 
+                               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
+                    <TextBox x:Name="Name" Grid.Row="1" Grid.Column="1" Text="" Margin="3" />
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Address: " 
+                               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
+                    <TextBox x:Name="InputAddress" Grid.Row="2" Grid.Column="1" Text="32 Arlington Road" Margin="3" />
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="City: " 
+                               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
+                    <TextBox x:Name="City" Grid.Row="3" Grid.Column="1" Text="Lake Ronkonkoma" Margin="3" />
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="State: "
+                               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
+                    <TextBox x:Name="State" Grid.Row="4" Grid.Column="1" Text="NY" Margin="3"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Zip: "
+                               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
+                    <TextBox x:Name="Zip" Grid.Row="5" Grid.Column="1" Text="11779" Margin="3"/>
+                </Grid>
+                <CheckBox Content="Associate Client to Selected Agency" IsChecked="{Binding ElementName=MyMapView, Path=LocationDisplay.IsEnabled}" Margin="61,3,3,5"/>
+
+                <Button Content="Find Nearest Treatment Center" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="FindAddressButton_Click" />
+
+                <ProgressBar x:Name="progress" IsIndeterminate="True" Visibility="Collapsed" Margin="12" />
+
+                <TextBlock x:Name="txtResult" Margin="12,16,12,0" Visibility="Collapsed" 
+                           FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" />
+
+               
+
+                <Button  Content="Load Bus Routes Map" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="LoadLocalMap_Click" />
+                <Button  Content="Test Loading Web Map" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="LoadWebMap_Click" />
+                <ListView x:Name="listResults" DataContext="{Binding ElementName=MyMapView, Path=GraphicsOverlays[graphicsOverlay]}" ItemsSource="{Binding Graphics}" Margin="0,12,0,0"
+                          Visibility="Collapsed">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <StackPanel Margin="4">
+                                        <TextBlock Text="{Binding Attributes[Locator].Address}"/>
+
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0:0.000}, {1:0.000}">
+                                                    <Binding Path="Attributes[Locator].Location.X" />
+                                                    <Binding Path="Attributes[Locator].Location.Y" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="Score" />
+                                    <TextBlock Text="{Binding Attributes[Locator].Score, StringFormat=0}" 
+                                               FontSize="18" TextAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
         </Border>
 
 
