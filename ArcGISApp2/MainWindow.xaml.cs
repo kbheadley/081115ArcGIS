@@ -248,7 +248,7 @@ namespace ArcGISApp2
                // _graphicsOverlay.Graphics.Add(matchGraphic);
 
                 txtResult.Visibility = System.Windows.Visibility.Visible;
-                txtResult.Text = ("Found:  " +  matchLocation.X +",  " +  matchLocation.Y);
+                txtResult.Text = ("Address Found:  " +  matchLocation.X +",  " +  matchLocation.Y);
 
                 // zooms into pin point graphic:
                 //The Envelope is created by subtracting 1000 meters from the location's
