@@ -149,11 +149,11 @@
                     
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Address: " 
                                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
-                    <TextBox x:Name="InputAddress" Grid.Row="3" Grid.Column="1" Text="32 Arlington Road" Margin="3" />
+                    <TextBox x:Name="InputAddress" Grid.Row="3" Grid.Column="1" Text="" Margin="3" />
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="City: " 
                                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
-                    <TextBox x:Name="City" Grid.Row="4" Grid.Column="1" Text="Lake Ronkonkoma" Margin="3" />
+                    <TextBox x:Name="City" Grid.Row="4" Grid.Column="1" Text="" Margin="3" />
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="State: "
                                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
@@ -161,7 +161,7 @@
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Zip: "
                                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" />
-                    <TextBox x:Name="Zip" Grid.Row="6" Grid.Column="1" Text="11779" Margin="3"/>
+                    <TextBox x:Name="Zip" Grid.Row="6" Grid.Column="1" Text="" Margin="3"/>
                 </Grid>
 
                 <Button Content="Find Nearest Treatment Center" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="FindAddressButton_Click" />
@@ -170,11 +170,11 @@
 
                 <TextBlock x:Name="txtResult" Margin="12,16,12,0" Visibility="Collapsed" 
                            FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" />
-                <CheckBox Content="Associate Client to Selected Agency" IsChecked="{Binding ElementName=MyMapView, Path=LocationDisplay.IsEnabled}" Margin="61,3,3,5"/>
+                <CheckBox Content="Assign Client to Selected Agency" IsChecked="{Binding ElementName=MyMapView, Path=LocationDisplay.IsEnabled}" Margin="61,3,3,5"/>
 
                 
          
-                <Button  Content="Load Bus Routes Map" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="LoadLocalMap_Click" />
+                <Button  Content="Load Bus Routes Map" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="LoadBusMap_Click" />
                 <Button  Content="Test Loading Web Map" Margin="12,12,12,0" Padding="16,5" IsDefault="True" Click="LoadWebMap_Click" />
                 <ListView x:Name="listResults" DataContext="{Binding ElementName=MyMapView, Path=GraphicsOverlays[graphicsOverlay]}" ItemsSource="{Binding Graphics}" Margin="0,12,0,0"
                           Visibility="Collapsed">
